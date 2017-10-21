@@ -6,19 +6,21 @@ const mapSketch = (p5) => {
   let canvasWidth = p5.windowWidth;
   let canvasHeight = p5.windowHeight;
   let centerLatitude = 0;
-  let cneterLongitude = 0;
+  let centerLongitude = 0;
   let latitude = 31.2304;
-  let longitdue = 121.4737;
+  let longitude = 121.4737;
   let zoom = 1;
 
-  const mercatorX = (longitude) => {
-    const mercatorA = (128 / p5.PI) * p5.pow(2, zoom);
-    const mercatorB = longitdue + p5.PI;
+  const webMercatorX = (longitude) => {
+    longitude = p5.radians(longitude);
+    const mercatorA = (256 / p5.PI) * p5.pow(2, zoom);
+    const mercatorB = longitude + p5.PI;
     return mercatorA * mercatorB;
   }
 
-  const mercatorY = (latitude) => {
-    const mercatorA = (128 / p5.PI) * p5.pow(2, zoom);
+  const webMercatorY = (latitude) => {
+    latitude = p5.radians(latitude);
+    const mercatorA = (256 / p5.PI) * p5.pow(2, zoom);
     const mercatorB = p5.tan(p5.PI / 4 + latitude / 2);
     const mercatorC = p5.PI - p5.log(mercatorB);
     return mercatorA * mercatorC;
@@ -34,6 +36,15 @@ const mapSketch = (p5) => {
     p5.translate(p5.width / 2, p5.height / 2);
     p5.imageMode(p5.CENTER);
     p5.image(mapImage, 0, 0);
+
+    const centerX = webMercatorX(centerLongitude);
+    const centerY = webMercatorY(centerLatitude);
+
+    const x = webMercatorX(longitude) - centerX;
+    const y = webMercatorY(latitude) - centerY;
+
+    p5.fill(255, 0, 255, 200);
+    p5.ellipse(x, y, 20, 20);
   }
 }
 
