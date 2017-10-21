@@ -54,7 +54,7 @@ const mapSketch = (p5) => {
       const y = webMercatorY(latitude) - centerY;
 
       p5.fill(255, 0, 255, 200);
-      p5.ellipse(x, y, 20, 20);
+      p5.ellipse(x, y, 10, 10);
     }
   }
 }
