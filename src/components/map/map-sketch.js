@@ -1,5 +1,6 @@
 import API_KEY from '../../api-key';
 
+import canvasPanZoom from '../../utilities/canvas-pan-zoom';
 import users from '../../data/users';
 
 const mapSketch = (p5) => {
